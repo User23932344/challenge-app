@@ -1,3 +1,4 @@
+
 # Challenge App - API Documentation
 
 Base URL: `http://localhost:3001/api`
@@ -14,9 +15,9 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ## Auth Endpoints
 
 ### Register
-**POST** `/auth/register`
+POST `/auth/register`
 
-Request:
+**Request:**
 ```json
 {
   "username": "string (required)",
@@ -25,7 +26,7 @@ Request:
 }
 ```
 
-Response (201):
+**Response (201):**
 ```json
 {
   "message": "User registered successfully",
@@ -38,16 +39,16 @@ Response (201):
 }
 ```
 
-Errors:
+**Errors:**
 - `400` - Missing fields or password too short
 - `409` - User already exists
 
 ---
 
 ### Login
-**POST** `/auth/login`
+POST `/auth/login`
 
-Request:
+**Request:**
 ```json
 {
   "email": "string (required)",
@@ -55,7 +56,7 @@ Request:
 }
 ```
 
-Response (200):
+**Response (200):**
 ```json
 {
   "message": "Login successful",
@@ -68,7 +69,7 @@ Response (200):
 }
 ```
 
-Errors:
+**Errors:**
 - `400` - Missing fields
 - `401` - Invalid credentials
 
@@ -77,11 +78,11 @@ Errors:
 ## User Endpoints
 
 ### Search Users
-**GET** `/users/search?query=username`
+GET `/users/search?query=username`
 
 Headers: `Authorization: Bearer TOKEN`
 
-Response (200):
+**Response (200):**
 ```json
 {
   "users": [
@@ -98,11 +99,11 @@ Response (200):
 ---
 
 ### Get User Profile
-**GET** `/users/:id`
+GET `/users/:id`
 
 Headers: `Authorization: Bearer TOKEN`
 
-Response (200):
+**Response (200):**
 ```json
 {
   "user": {
@@ -120,7 +121,7 @@ Response (200):
 }
 ```
 
-Errors:
+**Errors:**
 - `404` - User not found
 
 ---
@@ -128,59 +129,47 @@ Errors:
 ## Challenge Endpoints
 
 ### Create Challenge
-**POST** `/challenges`
+POST `/challenges`
 
 Headers: `Authorization: Bearer TOKEN`
 
-Request:
+**Request:**
 ```json
 {
   "title": "string (required)",
   "description": "string (optional)",
   "type": "one-time | recurring (required)",
-  "frequency": "daily | weekdays | etc (optional, for recurring)",
+  "frequency": "daily | weekdays (optional, for recurring)",
   "duration_days": "number (optional, for recurring)",
   "target_value": "number (optional)",
-  "metric_unit": "string (optional, e.g. 'km', 'minutes')",
+  "metric_unit": "string (optional)",
   "stake_description": "string (optional)",
-  "start_date": "YYYY-MM-DD (optional, defaults to today)",
-  "participant_ids": [1, 2, 3] // array of user IDs (optional)
+  "start_date": "YYYY-MM-DD (optional)",
+  "participant_ids": "[1, 2, 3] (optional)"
 }
 ```
 
-Response (201):
+**Response (201):**
 ```json
 {
   "message": "Challenge created successfully",
   "challenge": {
     "id": 1,
     "title": "30 дней медитации",
-    "description": "Медитировать каждый день",
     "type": "recurring",
-    "frequency": "daily",
-    "duration_days": 30,
-    "target_value": 10,
-    "metric_unit": "minutes",
-    "stake_description": null,
-    "creator_id": 1,
-    "created_at": "2026-01-18 10:00:00",
-    "start_date": "2026-01-18",
     "status": "pending"
   }
 }
 ```
 
-Errors:
-- `400` - Missing required fields
-
 ---
 
 ### Get User's Challenges
-**GET** `/challenges`
+GET `/challenges`
 
 Headers: `Authorization: Bearer TOKEN`
 
-Response (200):
+**Response (200):**
 ```json
 {
   "challenges": [
@@ -189,9 +178,7 @@ Response (200):
       "title": "30 дней медитации",
       "type": "recurring",
       "status": "active",
-      "role": "creator",
-      "accepted_at": "2026-01-18 10:00:00",
-      // ... other fields
+      "role": "creator"
     }
   ]
 }
@@ -200,392 +187,284 @@ Response (200):
 ---
 
 ### Get Challenge by ID
-**GET** `/challenges/:id`
+GET `/challenges/:id`
 
 Headers: `Authorization: Bearer TOKEN`
 
-Response (200):
+**Response (200):**
 ```json
 {
-  "challenge": {
-    "id": 1,
-    "title": "30 дней медитации",
-    // ... all challenge fields
-  },
-  "participants": [
-    {
-      "id": 1,
-      "challenge_id": 1,
-      "user_id": 1,
-      "username": "testuser",
-      "email": "test@example.com",
-      "role": "creator",
-      "accepted_at": "2026-01-18 10:00:00"
-    }
-  ]
+  "challenge": {},
+  "participants": []
 }
 ```
 
-Errors:
+**Errors:**
 - `403` - Not a participant
 - `404` - Challenge not found
 
 ---
 
 ### Accept Challenge
-**POST** `/challenges/:id/accept`
+POST `/challenges/:id/accept`
 
 Headers: `Authorization: Bearer TOKEN`
 
-Response (200):
+**Response (200):**
 ```json
 {
   "message": "Challenge accepted"
 }
 ```
 
-Errors:
-- `404` - Invitation not found or already accepted
-
 ---
 
 ### Decline Challenge
-**DELETE** `/challenges/:id/decline`
+DELETE `/challenges/:id/decline`
 
 Headers: `Authorization: Bearer TOKEN`
 
-Response (200):
+**Response (200):**
 ```json
 {
   "message": "Challenge declined"
 }
 ```
 
-Errors:
-- `404` - Invitation not found
-
 ---
 
 ### Update Challenge Status
-**PATCH** `/challenges/:id/status`
+PATCH `/challenges/:id/status`
 
 Headers: `Authorization: Bearer TOKEN`
 
-Request:
+**Request:**
 ```json
 {
   "status": "pending | active | completed | cancelled"
 }
 ```
 
-Response (200):
+**Response (200):**
 ```json
 {
   "message": "Challenge status updated",
-  "challenge": { /* updated challenge */ }
+  "challenge": {}
 }
 ```
 
-Errors:
-- `400` - Invalid status
-- `403` - Only creator can update status
+**Errors:**
+- `403` - Only creator can update
 
 ---
 
 ### Delete Challenge
-**DELETE** `/challenges/:id`
+DELETE `/challenges/:id`
 
 Headers: `Authorization: Bearer TOKEN`
 
-Response (200):
+**Response (200):**
 ```json
 {
   "message": "Challenge deleted successfully"
 }
 ```
 
-Errors:
+**Errors:**
 - `403` - Only creator can delete
 
 ---
 
 ### Get Challenge Leaderboard
-**GET** `/challenges/:id/leaderboard`
+GET `/challenges/:id/leaderboard`
 
 Headers: `Authorization: Bearer TOKEN`
 
-Response (200):
+**Response (200):**
 ```json
 {
   "leaderboard": [
     {
       "id": 1,
       "username": "testuser",
-      "role": "creator",
-      "total_entries": 30,
       "completed_days": 25,
-      "total_value": 250,
-      "last_activity": "2026-01-18",
       "current_streak": 5
     }
   ]
 }
 ```
 
-Errors:
-- `403` - Not a participant
-
 ---
 
 ## Progress Endpoints
 
 ### Mark Progress
-**POST** `/progress/:challengeId`
+POST `/progress/:challengeId`
 
 Headers: `Authorization: Bearer TOKEN`
 
-Request:
+**Request:**
 ```json
 {
-  "date": "YYYY-MM-DD (optional, defaults to today)",
+  "date": "YYYY-MM-DD (optional)",
   "completed": true,
   "value": 15,
-  "note": "Отличная тренировка",
-  "proof_url": "string (optional, set via upload)"
+  "note": "string (optional)"
 }
 ```
 
-Response (200):
+**Response (200):**
 ```json
 {
   "message": "Progress marked successfully",
-  "progress": {
-    "id": 1,
-    "participant_id": 1,
-    "date": "2026-01-18",
-    "completed": 1,
-    "value": 15,
-    "note": "Отличная тренировка",
-    "proof_url": null,
-    "completed_at": "2026-01-18 10:00:00"
-  }
+  "progress": {}
 }
 ```
 
-Errors:
-- `403` - Not a participant
-
 ---
 
-### Get Challenge Progress (All Participants)
-**GET** `/progress/:challengeId`
+### Get Challenge Progress
+GET `/progress/:challengeId`
 
 Headers: `Authorization: Bearer TOKEN`
 
-Response (200):
+**Response (200):**
 ```json
 {
-  "progress": [
-    {
-      "id": 1,
-      "participant_id": 1,
-      "user_id": 1,
-      "username": "testuser",
-      "date": "2026-01-18",
-      "completed": 1,
-      "value": 15,
-      "note": "Отличная тренировка",
-      "proof_url": "/uploads/123.jpg",
-      "completed_at": "2026-01-18 10:00:00"
-    }
-  ]
+  "progress": []
 }
 ```
 
 ---
 
 ### Get My Progress
-**GET** `/progress/:challengeId/my`
+GET `/progress/:challengeId/my`
 
 Headers: `Authorization: Bearer TOKEN`
 
-Response (200):
+**Response (200):**
 ```json
 {
-  "progress": [ /* array of progress entries */ ],
+  "progress": [],
   "stats": {
     "total_days": 30,
-    "completed_days": 25,
-    "total_value": 250
+    "completed_days": 25
   }
 }
 ```
 
-Errors:
-- `403` - Not a participant
-
 ---
 
 ### Upload Photo Proof
-**POST** `/progress/:progressId/upload`
+POST `/progress/:progressId/upload`
 
 Headers: `Authorization: Bearer TOKEN`
 
-Request: `multipart/form-data`
-- Field name: `photo`
-- File types: jpeg, jpg, png, gif, webp
-- Max size: 5MB
+**Request:** multipart/form-data
+- Field: `photo`
+- Types: jpeg, jpg, png, gif, webp
+- Max: 5MB
 
-Response (200):
+**Response (200):**
 ```json
 {
   "message": "Photo uploaded successfully",
-  "proof_url": "/uploads/1768746647061-1-photo.png"
+  "proof_url": "/uploads/123.jpg"
 }
 ```
-
-Errors:
-- `400` - No file uploaded or invalid file type
-- `403` - Access denied (not your progress)
 
 ---
 
 ## Comment Endpoints
 
-### Add Comment to Progress
-**POST** `/comments/progress/:progressId`
+### Add Comment
+POST `/comments/progress/:progressId`
 
 Headers: `Authorization: Bearer TOKEN`
 
-Request:
+**Request:**
 ```json
 {
-  "comment": "string (required, non-empty)"
+  "comment": "string (required)"
 }
 ```
 
-Response (201):
+**Response (201):**
 ```json
 {
   "message": "Comment added",
-  "comment": {
-    "id": 1,
-    "progress_id": 1,
-    "user_id": 1,
-    "comment": "Отличная работа!",
-    "created_at": "2026-01-18 10:00:00",
-    "username": "testuser"
-  }
+  "comment": {}
 }
 ```
-
-Errors:
-- `400` - Comment is empty
-- `403` - Only challenge participants can comment
-- `404` - Progress not found
 
 ---
 
-### Get Comments for Progress
-**GET** `/comments/progress/:progressId`
+### Get Comments
+GET `/comments/progress/:progressId`
 
 Headers: `Authorization: Bearer TOKEN`
 
-Response (200):
+**Response (200):**
 ```json
 {
-  "comments": [
-    {
-      "id": 1,
-      "progress_id": 1,
-      "user_id": 1,
-      "username": "testuser",
-      "comment": "Отличная работа!",
-      "created_at": "2026-01-18 10:00:00"
-    }
-  ]
+  "comments": []
 }
 ```
-
-Errors:
-- `403` - Access denied
-- `404` - Progress not found
 
 ---
 
 ### Delete Comment
-**DELETE** `/comments/:commentId`
+DELETE `/comments/:commentId`
 
 Headers: `Authorization: Bearer TOKEN`
 
-Response (200):
+**Response (200):**
 ```json
 {
   "message": "Comment deleted"
 }
 ```
 
-Errors:
-- `404` - Comment not found or access denied (can only delete own comments)
-
 ---
 
 ## Notification Endpoints
 
 ### Get Notifications
-**GET** `/notifications`
+GET `/notifications`
 
-Query params:
-- `unread=true` (optional) - only unread notifications
+Query: `?unread=true` (optional)
 
 Headers: `Authorization: Bearer TOKEN`
 
-Response (200):
+**Response (200):**
 ```json
 {
-  "notifications": [
-    {
-      "id": 1,
-      "user_id": 1,
-      "type": "challenge_invite | challenge_accepted | progress_marked | comment_added",
-      "title": "Новое приглашение",
-      "message": "testuser приглашает тебя в челлендж",
-      "challenge_id": 1,
-      "progress_id": null,
-      "from_user_id": 2,
-      "from_username": "friend",
-      "is_read": 0,
-      "created_at": "2026-01-18 10:00:00"
-    }
-  ]
+  "notifications": []
 }
 ```
 
 ---
 
-### Mark Notification as Read
-**PATCH** `/notifications/:id/read`
+### Mark as Read
+PATCH `/notifications/:id/read`
 
 Headers: `Authorization: Bearer TOKEN`
 
-Response (200):
+**Response (200):**
 ```json
 {
   "message": "Notification marked as read"
 }
 ```
 
-Errors:
-- `404` - Notification not found
-
 ---
 
-### Mark All Notifications as Read
-**PATCH** `/notifications/read-all`
+### Mark All as Read
+PATCH `/notifications/read-all`
 
 Headers: `Authorization: Bearer TOKEN`
 
-Response (200):
+**Response (200):**
 ```json
 {
   "message": "All notifications marked as read"
@@ -595,91 +474,34 @@ Response (200):
 ---
 
 ### Delete Notification
-**DELETE** `/notifications/:id`
+DELETE `/notifications/:id`
 
 Headers: `Authorization: Bearer TOKEN`
 
-Response (200):
+**Response (200):**
 ```json
 {
   "message": "Notification deleted"
 }
 ```
 
-Errors:
-- `404` - Notification not found
-
 ---
 
 ## Error Responses
 
-All errors follow this format:
+All errors return:
 ```json
 {
-  "error": "Error message description"
+  "error": "Error message"
 }
 ```
 
-Common HTTP status codes:
-- `200` - Success
-- `201` - Created
-- `400` - Bad Request (validation errors)
-- `401` - Unauthorized (invalid/missing token)
-- `403` - Forbidden (no permission)
-- `404` - Not Found
-- `409` - Conflict (duplicate data)
-- `500` - Server Error
-
----
-
-## Data Models
-
-### User
-```typescript
-{
-  id: number;
-  username: string;
-  email: string;
-  password_hash: string;
-  created_at: string;
-}
-```
-
-### Challenge
-```typescript
-{
-  id: number;
-  title: string;
-  description?: string;
-  type: 'one-time' | 'recurring';
-  frequency?: string;
-  duration_days?: number;
-  target_value?: number;
-  metric_unit?: string;
-  stake_description?: string;
-  creator_id: number;
-  created_at: string;
-  start_date?: string;
-  status: 'pending' | 'active' | 'completed' | 'cancelled';
-}
-```
-
-### Progress
-```typescript
-{
-  id: number;
-  participant_id: number;
-  date: string;
-  completed: boolean;
-  value?: number;
-  note?: string;
-  proof_url?: string;
-  completed_at?: string;
-}
-```
-
-### Notification Types
-- `challenge_invite` - User invited to challenge
-- `challenge_accepted` - Participant accepted challenge
-- `progress_marked` - Participant marked progress
-- `comment_added` - New comment on progress
+Status codes:
+- 200 - Success
+- 201 - Created
+- 400 - Bad Request
+- 401 - Unauthorized
+- 403 - Forbidden
+- 404 - Not Found
+- 409 - Conflict
+- 500 - Server Error
