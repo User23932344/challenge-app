@@ -1,0 +1,57 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.header {
+  display: flex;
+  background-color: $bg-primary;
+  justify-content: space-between;
+  align-items: center; 
+  padding: $spacing-md $spacing-lg;
+  box-shadow: $shadow-sm;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md; 
+}
+
+.menu {
+  @include button-base;
+  background: transparent;
+  font-size: 24px;
+  color: $text-primary;
+  
+  &:hover {
+    background: $bg-tertiary;
+  }
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  color: $text-primary;
+  margin: 0;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.username {
+  color: $text-secondary;
+  font-size: 14px;
+}
+
+.logout {
+  @include button-base;
+  background-color: $error-color;
+  color: white;
+  padding: $spacing-sm $spacing-md;
+  
+  &:hover {
+    background-color: darken($error-color, 10%);
+  }
+}

@@ -1,0 +1,58 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.sidebarOpen,
+.sidebarClosed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 250px;
+  background: $bg-primary;
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  box-shadow: $shadow-lg;
+  padding: $spacing-lg;
+}
+
+.sidebarOpen {
+  transform: translateX(0);
+}
+
+.sidebarClosed {
+  transform: translateX(-100%);
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  margin-top: $spacing-xl;
+}
+
+.link {
+  padding: $spacing-md;
+  color: $text-primary;
+  text-decoration: none;
+  border-radius: $border-radius;
+  transition: background 0.2s;
+
+  &:hover {
+    background: $bg-tertiary;
+  }
+
+  &:active {
+    background: $primary-light;
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  cursor: pointer;
+}

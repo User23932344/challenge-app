@@ -1,0 +1,103 @@
+@import '../styles/variables';
+@import '../styles/mixins';
+
+.container {
+  min-height: 100vh;
+  @include flex-center;
+  background: linear-gradient(135deg, $primary-light 0%, $bg-secondary 100%);
+}
+
+.card {
+  background: $bg-primary;
+  padding: $spacing-xl;
+  border-radius: $border-radius;
+  box-shadow: $shadow-lg;
+  width: 100%;
+  max-width: 400px;
+}
+
+.title {
+  text-align: center;
+  color: $text-primary;
+  margin-bottom: $spacing-lg;
+  font-size: 28px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+
+  label {
+    color: $text-secondary;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  input {
+    padding: $spacing-sm $spacing-md;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    font-size: 16px;
+    transition: border-color 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+    }
+
+    &:disabled {
+      background: $bg-tertiary;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.error {
+  background: lighten($error-color, 40%);
+  color: $error-color;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $border-radius;
+  font-size: 14px;
+}
+
+.button {
+  @include button-base;
+  background: $primary-color;
+  color: white;
+  font-size: 16px;
+  margin-top: $spacing-sm;
+
+  &:hover:not(:disabled) {
+    background: $primary-hover;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.footer {
+  text-align: center;
+  margin-top: $spacing-lg;
+  color: $text-secondary;
+  font-size: 14px;
+
+  a {
+    color: $primary-color;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
