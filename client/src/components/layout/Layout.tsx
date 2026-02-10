@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Header } from './Header'; 
 import { Sidebar } from './Sidebar';
+import { Footer } from './Footer';
 import styles from './Layout.module.scss';
 
 interface LayoutProps {
@@ -19,6 +20,8 @@ interface LayoutProps {
         <main className={styles.content}>
           {children}
         </main>
+
+        <Footer/>
       </div>
     );
   };

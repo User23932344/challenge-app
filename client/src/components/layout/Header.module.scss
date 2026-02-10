@@ -1,13 +1,16 @@
-@import '../../styles/variables';
-@import '../../styles/mixins';
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
 
 .header {
+  position: sticky; 
+  top: 0; 
   display: flex;
   background-color: $bg-primary;
   justify-content: space-between;
-  align-items: center; 
+  align-items: center;
   padding: $spacing-md $spacing-lg;
-  box-shadow: $shadow-sm;
+  box-shadow: $shadow-lg;
+  z-index: 100; 
 }
 
 .left {
@@ -52,6 +55,6 @@
   padding: $spacing-sm $spacing-md;
   
   &:hover {
-    background-color: darken($error-color, 10%);
+    background-color: #dc2626; 
   }
 }

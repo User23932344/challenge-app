@@ -1,2 +1,15 @@
 @use '../../styles/variables' as *;
 @use '../../styles/mixins' as *;
+
+.layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .content {
+    min-height: 100vh; 
+    padding: $spacing-lg;
+    padding-top: $spacing-lg;
+    background: $bg-tertiary;
+  }

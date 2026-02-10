@@ -1,0 +1,83 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.challenge {
+  max-width: 400px;
+  background: $bg-primary;
+  box-shadow: $shadow-md;
+  border-radius: $border-radius;
+  padding: $spacing-lg;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+    transform: translateY(-2px);
+  }
+}
+
+.header {
+  @include flex-between;
+  margin-bottom: $spacing-md;
+}
+
+.title {
+  margin: 0;
+  font-size: 20px;
+  color: $text-primary;
+  font-weight: 600;
+}
+
+.badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.pending {
+    background: #fef3c7;
+    color: $warning-color;
+  }
+  
+  .active {
+    background: #d1fae5;
+    color: $success-color;
+  }
+
+.completed {
+    background: #dbeafe; 
+    color: $primary-color;
+  }
+
+  .cancelled {
+    background: #fee2e2; 
+    color: $error-color;
+  }
+
+.description {
+  color: $text-secondary;
+  font-size: 14px;
+  margin: 0 0 $spacing-md 0;
+}
+
+.meta {
+  display: flex;
+  gap: $spacing-md;
+  margin-bottom: $spacing-md;
+  font-size: 14px;
+}
+
+.type,
+.duration {
+  color: $text-light;
+}
+
+.footer {
+  @include flex-between;
+  padding-top: $spacing-md;
+  border-top: 1px solid $border-color;
+  font-size: 12px;
+  color: $text-light;
+}
